@@ -167,7 +167,7 @@ body {
   <title>Vladimir Recevic | The Game</title>
 </head>
 
-<body>
+<body onmousemove="KeySimulation()">
 
   <div id="canvas-wrap">
     <!-- Aquí va el canvas -->
@@ -211,113 +211,18 @@ body {
   <script defer src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
   <script>
 
-if ($(window).height() <= "960")) {
-    //Your code to display keyboard controls
-    //P.S. 960 is height of iPhone 4+ screen
-}
-
-var isMobile;
-checkMobile = function() {
-    if ($(window).width() <= 766) {
-        isMobile = true;
+function KeySimulation()
+    {
+    var e = document.createEvent("KeyboardEvent");
+    if (e.initKeyboardEvent) {  // Chrome, IE
+        e.initKeyboardEvent("keyup", true, true, document.defaultView, "Enter", 0, "", false, "");
+    } else { // FireFox
+        e.initKeyEvent("keyup", true, true, document.defaultView, false, false, false, false, 13, 0);
     }
-    else {
-        isMobile = false;
+    document.getElementById("MyTextArea").dispatchEvent(e);
     }
-}
-
-
-$(window).resize(checkMobile());
-$(document).ready(checkMobile());    
-
-if (isMobile) {
-    $('.button-pad').show();
-}
-else {
-    $('.button-pad').hide();
-}
-
-
-$(document).on('click', '.button-pad > button', function(e) {
-    if ($(this).hasClass('left')) {
-        e = 37;
-    }
-    else if ($(this).hasClass('up')) {
-        e = 38;
-    }
-    else if ($(this).hasClass('right')) {
-        e = 39;
-    }
-    else if ($(this).hasClass('down')) {
-        e = 40;
-    }
-    $.Event("keydown", {keyCode: e});
-}
-
-var obj = document.getElementById('id');
-obj.addEventListener('touchmove', function(event) {
-  // If there's exactly one finger inside this element
-  if (event.targetTouches.length == 1) {
-    var touch = event.targetTouches[0];
-    // Place element where the finger is
-    obj.style.left = touch.pageX + 'px';
-    obj.style.top = touch.pageY + 'px';
-  }
-}, false);
-
-
-// Setup canvas and expose context via ctx variable
-canvas.addEventListener('touchmove', function(event) {
-  for (var i = 0; i < event.touches.length; i++) {
-    var touch = event.touches[i];
-    ctx.beginPath();
-    ctx.arc(touch.pageX, touch.pageY, 20, 0, 2*Math.PI, true);
-    ctx.fill();
-    ctx.stroke();
-  }
-}, false);
-
-
-document.body.addEventListener('touchmove', function(event) {
-  event.preventDefault();
-}, false);
-
-canvas.addEventListener('touchmove', function(event) {
-  renderTouches(event.touches);
-}, false);
-
-var touches = []
-canvas.addEventListener('touchmove', function(event) {
-  touches = event.touches;
-}, false);
-
-// Setup a 60fps timer
-timer = setInterval(function() {
-  renderTouches(touches);
-}, 15);
-
-
-obj1.addEventListener('touchmove', function(event) {
-  for (var i = 0; i < event.targetTouches; i++) {
-    var touch = event.targetTouches[i];
-    console.log('touched ' + touch.identifier);
-  }
-}, false);
-
-
-var objs = [obj1, obj2];
-for (var i = 0; i < objs.length; i++) {
-  var obj = objs[i];
-  obj.addEventListener('touchmove', function(event) {
-    if (event.targetTouches.length == 1) {
-      console.log('touched ' + event.targetTouches[0].identifier);
-    }
-  }, false);
-}
-
-
-
-
+<input type="button" onclick="KeySimulation();" value=" Key Simulation " />
+<textarea id="MyTextArea" rows="15" cols="30"></textarea>
 
 function Backgrounds(canvasHeight, ctx) {
   
