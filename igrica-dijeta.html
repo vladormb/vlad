@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" 
+  content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+  ;<style>
+
+body {
+  display: flex;
+  justify-content: center;
+  background-image: linear-gradient(45deg, rgba(194, 233, 221, 0.5) 1%, rgba(104, 119, 132, 0.5) 100%),
+  linear-gradient(-45deg, #494d71 0%, rgba(217, 230, 185, 0.5) 80%);
+}
+
+#canvas-wrap {
+  position: relative;
+}
+
+#canvas-wrap canvas, .overlay {
+  position: absolute;
+  left: -500px;
+  top: 100px;
+}
+
+#canvas-wrap .overlay {
+  width: 1000px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+#canvas-wrap .show-hide {
+  display: none;
+}
+
+#canvas-wrap #start-screen {
+  background-color: #13151C;
+  color: #DADADA;
+}
+
+#canvas-wrap #start-screen #game-title {
+  font-family: 'Lobster';
+  margin-bottom: 0;
+
+}
+
+#canvas-wrap #start-screen #game-title span{
+  font-size: 24px;
+}
+
+  #canvas-wrap #start-screen .icon {
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+}
+
+#canvas-wrap #start-screen #volume {
+  margin-left: 40px;
+}
+
+#canvas-wrap #start-screen .start-text {
+  font-family: 'Open Sans';
+  font-weight: 600;
+  font-size: 16px;
+  font-style: italic;
+  position: absolute;
+  bottom: 8%;
+  margin: 0 auto;
+}
+
+#canvas-wrap #start-screen .start-text .press-space {
+  border-top: 0.25px solid #DADADA;
+  border-bottom: 0.25px solid #DADADA;
+  padding-bottom: 5px;
+  padding-top: 2px;
+}
+
+#canvas-wrap #text-info {
+  width: 50%;
+  position: absolute;
+  left: 25%;
+  top: 30%;
+  background-color: #DADADA;
+  color:#13151C;
+  border-radius: 10px;
+  font-family: 'Open sans';
+  font-weight: 600;
+}
+
+#canvas-wrap #text-info .fa-times-circle {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+#canvas-wrap .list {
+  list-style: none;
+  text-align: center;
+  padding: 20px 0;
+}
+
+#canvas-wrap .list .list-item {
+  padding: 10px 0;
+}
+
+#canvas-wrap #stop-screen {
+  background-color: #13151C;
+}
+
+#canvas-wrap .final-result {
+  width: 50%;
+  position: absolute;
+  left: 25%;
+  top: 30%;
+  background-color: #DADADA;
+  color: rgba(0, 153, 76, 0.85);
+  border-radius: 10px;
+  font-family: 'Open sans';
+  font-weight: 600;
+  text-align: center;
+}
+
+#distance, #broccolis {
+  font-weight: 800;
+  font-size: 1.5em;
+}
+
+.btn {
+  box-sizing: border-box;
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #1abc9c;
+  border-radius: 3em;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  margin: 0 0 20px;
+  padding: 1.2em 2.8em;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  background-image: -webkit-gradient(linear, left top, right top, from(rgba(26, 188, 156, 0.6)), color-stop(5%, rgba(26, 188, 156, 0.6)), color-stop(5%, #1abc9c), color-stop(10%, #1abc9c), color-stop(10%, rgba(26, 188, 156, 0.6)), color-stop(15%, rgba(26, 188, 156, 0.6)), color-stop(15%, #1abc9c), color-stop(20%, #1abc9c), color-stop(20%, rgba(26, 188, 156, 0.6)), color-stop(25%, rgba(26, 188, 156, 0.6)), color-stop(25%, #1abc9c), color-stop(30%, #1abc9c), color-stop(30%, rgba(26, 188, 156, 0.6)), color-stop(35%, rgba(26, 188, 156, 0.6)), color-stop(35%, #1abc9c), color-stop(40%, #1abc9c), color-stop(40%, rgba(26, 188, 156, 0.6)), color-stop(45%, rgba(26, 188, 156, 0.6)), color-stop(45%, #1abc9c), color-stop(50%, #1abc9c), color-stop(50%, rgba(26, 188, 156, 0.6)), color-stop(55%, rgba(26, 188, 156, 0.6)), color-stop(55%, #1abc9c), color-stop(60%, #1abc9c), color-stop(60%, rgba(26, 188, 156, 0.6)), color-stop(65%, rgba(26, 188, 156, 0.6)), color-stop(65%, #1abc9c), color-stop(70%, #1abc9c), color-stop(70%, rgba(26, 188, 156, 0.6)), color-stop(75%, rgba(26, 188, 156, 0.6)), color-stop(75%, #1abc9c), color-stop(80%, #1abc9c), color-stop(80%, rgba(26, 188, 156, 0.6)), color-stop(85%, rgba(26, 188, 156, 0.6)), color-stop(85%, #1abc9c), color-stop(90%, #1abc9c), color-stop(90%, rgba(26, 188, 156, 0.6)), color-stop(95%, rgba(26, 188, 156, 0.6)), color-stop(95%, #1abc9c), to(#1abc9c));
+  background-image: linear-gradient(to right, rgba(26, 188, 156, 0.6), rgba(26, 188, 156, 0.6) 5%, #1abc9c 5%, #1abc9c 10%, rgba(26, 188, 156, 0.6) 10%, rgba(26, 188, 156, 0.6) 15%, #1abc9c 15%, #1abc9c 20%, rgba(26, 188, 156, 0.6) 20%, rgba(26, 188, 156, 0.6) 25%, #1abc9c 25%, #1abc9c 30%, rgba(26, 188, 156, 0.6) 30%, rgba(26, 188, 156, 0.6) 35%, #1abc9c 35%, #1abc9c 40%, rgba(26, 188, 156, 0.6) 40%, rgba(26, 188, 156, 0.6) 45%, #1abc9c 45%, #1abc9c 50%, rgba(26, 188, 156, 0.6) 50%, rgba(26, 188, 156, 0.6) 55%, #1abc9c 55%, #1abc9c 60%, rgba(26, 188, 156, 0.6) 60%, rgba(26, 188, 156, 0.6) 65%, #1abc9c 65%, #1abc9c 70%, rgba(26, 188, 156, 0.6) 70%, rgba(26, 188, 156, 0.6) 75%, #1abc9c 75%, #1abc9c 80%, rgba(26, 188, 156, 0.6) 80%, rgba(26, 188, 156, 0.6) 85%, #1abc9c 85%, #1abc9c 90%, rgba(26, 188, 156, 0.6) 90%, rgba(26, 188, 156, 0.6) 95%, #1abc9c 95%, #1abc9c 100%);
+  background-position: 0 0;
+  background-size: 100%;
+  transition: background 300ms ease-in-out;
+}
+
+.btn:hover, .btn:focus {
+  color: #fff;
+  outline: 0;
+  background-position: 100px;
+}
+
+
+
+  </style>
+  <title>Vladimir Recevic | The Game</title>
+</head>
+
+<body>
+
+  <div id="canvas-wrap">
+    <!-- Aquí va el canvas -->
+    <div id="start-screen" class="overlay">
+
+      <h1 id="game-title">Vladimir Rečević</h1>
+  
+      <i class="fas fa-info-circle icon fa-2x"></i>
+
+      <div class="start-text">
+        <p class="press-space">Stisni SPACE BAR na tastaturi i polećeš!</p>
+      </div>
+
+      <div id="text-info" class="show-hide">
+        <ul class="list">
+          <li class="list-item">Stisni SPACE BAR na tastaturi i polećeš!</li>
+          <li class="list-item">Jedi zeleno.</li>
+          <li class="list-item">Nemoj jesti slaninu, ubiće te!</li>
+          
+          <li class="list-item">Stisni Z na tastaturi da pauziraš igru!</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div id="stop-screen" class="overlay show-hide">
+      <div class="final-result">
+        <ul class="list">
+          <li class="list-item">Leteo si <span id="distance"></span> metara</li>
+          <li class="list-item">Pojeo si <span id="broccolis"></span> povrća</li>
+        </ul>
+
+        <button id="fly-again" class="btn second">Poleti ponovo</button>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
+  <script>
+
+if ($(window).height() <= "960")) {
+    //Your code to display keyboard controls
+    //P.S. 960 is height of iPhone 4+ screen
+}
+
+var isMobile;
+checkMobile = function() {
+    if ($(window).width() <= 766) {
+        isMobile = true;
+    }
+    else {
+        isMobile = false;
+    }
+}
+
+
+$(window).resize(checkMobile());
+$(document).ready(checkMobile());    
+
+if (isMobile) {
+    $('.button-pad').show();
+}
+else {
+    $('.button-pad').hide();
+}
+
+
+$(document).on('click', '.button-pad > button', function(e) {
+    if ($(this).hasClass('left')) {
+        e = 37;
+    }
+    else if ($(this).hasClass('up')) {
+        e = 38;
+    }
+    else if ($(this).hasClass('right')) {
+        e = 39;
+    }
+    else if ($(this).hasClass('down')) {
+        e = 40;
+    }
+    $.Event("keydown", {keyCode: e});
+}
+
+var obj = document.getElementById('id');
+obj.addEventListener('touchmove', function(event) {
+  // If there's exactly one finger inside this element
+  if (event.targetTouches.length == 1) {
+    var touch = event.targetTouches[0];
+    // Place element where the finger is
+    obj.style.left = touch.pageX + 'px';
+    obj.style.top = touch.pageY + 'px';
+  }
+}, false);
+
+
+// Setup canvas and expose context via ctx variable
+canvas.addEventListener('touchmove', function(event) {
+  for (var i = 0; i < event.touches.length; i++) {
+    var touch = event.touches[i];
+    ctx.beginPath();
+    ctx.arc(touch.pageX, touch.pageY, 20, 0, 2*Math.PI, true);
+    ctx.fill();
+    ctx.stroke();
+  }
+}, false);
+
+
+document.body.addEventListener('touchmove', function(event) {
+  event.preventDefault();
+}, false);
+
+canvas.addEventListener('touchmove', function(event) {
+  renderTouches(event.touches);
+}, false);
+
+var touches = []
+canvas.addEventListener('touchmove', function(event) {
+  touches = event.touches;
+}, false);
+
+// Setup a 60fps timer
+timer = setInterval(function() {
+  renderTouches(touches);
+}, 15);
+
+
+obj1.addEventListener('touchmove', function(event) {
+  for (var i = 0; i < event.targetTouches; i++) {
+    var touch = event.targetTouches[i];
+    console.log('touched ' + touch.identifier);
+  }
+}, false);
+
+
+var objs = [obj1, obj2];
+for (var i = 0; i < objs.length; i++) {
+  var obj = objs[i];
+  obj.addEventListener('touchmove', function(event) {
+    if (event.targetTouches.length == 1) {
+      console.log('touched ' + event.targetTouches[0].identifier);
+    }
+  }, false);
+}
+
+
+
+
+
+function Backgrounds(canvasHeight, ctx) {
+  
+  this.canvasHeight = canvasHeight;
+  this.ctx = ctx;
+  this.backgroundWidth = 5000;
+  this.backgroundHeight = 500;
+
+  this.floor = new Image();
+  this.floor.src = 'assets/floor.png';
+  this.floorX = 0;
+
+  this.mountains = new Image();
+  this.mountains.src = 'assets/mountains.png';
+  this.mountainsX = 0;
+
+  this.sky = new Image();
+  this.sky.src = 'assets/sky.png';
+  this.skyX = 0;
+
+  this.clouds = new Image();
+  this.clouds.src = 'assets/clouds.png';
+  this.cloudsX = 0;
+}
+
+Backgrounds.prototype.drawFloor = function () {
+  this.ctx.drawImage(this.floor, this.floorX, this.canvasHeight - this.backgroundHeight);
+  this.ctx.drawImage(this.floor, this.floorX + this.backgroundWidth, this.canvasHeight - this.backgroundHeight);
+  if (this.floorX <= -5000) {
+    this.floorX = 0;
+  }
+};
+
+Backgrounds.prototype.drawMountains = function () {
+  this.ctx.drawImage(this.mountains, this.mountainsX, this.canvasHeight - this.backgroundHeight);
+  this.ctx.drawImage(this.mountains, this.mountainsX + this.backgroundWidth, this.canvasHeight - this.backgroundHeight);
+  if (this.mountainsX <= -5000) {
+    this.mountainsX = 0;
+  }
+};
+
+Backgrounds.prototype.drawSky = function () {
+  this.ctx.drawImage(this.sky, this.skyX, this.canvasHeight - this.backgroundHeight);
+  this.ctx.drawImage(this.sky, this.skyX + this.backgroundWidth, this.canvasHeight - this.backgroundHeight);
+};
+
+Backgrounds.prototype.drawClouds = function () {
+  this.ctx.drawImage(this.clouds, this.cloudsX, this.canvasHeight - this.backgroundHeight);
+  this.ctx.drawImage(this.clouds, this.cloudsX + this.backgroundWidth, this.canvasHeight - this.backgroundHeight);
+};
+
+
+function Broccoli(x, y, ctx) {
+  this.x = x;
+  this.y = y;
+  this.ctx = ctx;
+
+  this.spriteWidth = 20;
+  this.spriteHeight = 20;
+  this.spriteRows = 1;
+  this.spriteColumns = 1;
+  this.spriteRotate = 1;
+  this.spriteFrameWidth = this.spriteWidth / this.spriteColumns;
+  this.spriteFrameHeight = this.spriteHeight / this.spriteRows;
+  this.currentFrame = 0;
+  this.srcX = 0;
+  this.srcY = 0;
+  this.frameCount = 1;
+  this.rotate = true;
+  this.brocoliImage = new Image();
+  this.brocoliImage.src = 'assets/broccoli.png';
+}
+
+Broccoli.prototype.drawTrap = function () {
+  this.ctx.drawImage(this.brocoliImage, this.srcX, this.srcY, this.spriteFrameWidth, this.spriteFrameHeight, this.x, this.y, this.spriteWidth, this.spriteHeight);
+};
+
+
+
+// Defino las propiedades básicas del personaje.
+function Character(x, y, ctx) {
+  
+  this.x = x;
+  this.y = y;
+  this.ctx = ctx;
+  
+  this.speedY = 0;
+  this.gravity = 0.6;
+  this.gravitySpeed = 0;
+  this.bounce = 0.3;
+
+
+  this.spriteWidth = 80;
+  this.spriteHeight = 83;
+  this.spriteRows = 1;
+  this.spriteColumns = 1;
+  this.spriteWalk = 1;
+  this.spriteFrameWidth = this.spriteWidth / this.spriteColumns;
+  this.spriteFrameHeight = this.spriteHeight / this.spriteRows;
+  this.currentFrame = 0;
+  this.srcX = 0;
+  this.srcY = 0;
+  this.frameCount = 1;
+  this.walk = false;
+  this.fly = false;
+  this.eating = false;
+  this.characterImage = new Image();
+  this.characterImage.src = 'assets/walk.png';
+  
+}
+// Dibujo el personaje
+Character.prototype.drawCharacter = function () {
+  this.ctx.drawImage(this.characterImage, this.srcX, this.srcY, this.spriteFrameWidth, this.spriteFrameHeight, this.x, this.y, this.spriteFrameWidth, this.spriteFrameHeight);
+};
+Character.prototype.updateFrame = function () {
+  this.currentFrame = ++this.currentFrame % this.frameCount;
+  this.srcX = this.currentFrame * this.spriteFrameWidth;
+
+  // Como falla la animación del vuelo, de momento, comento esto y dejo sólo que ande.
+  // if (this.fly == true) {
+  //   this.drawEating();
+  // } else if (this.walk == true) {
+  //   this.drawWalk();
+  // }
+  this.drawWalk();
+
+  this.frameInterval = window.requestAnimationFrame(this.updateFrame.bind(this));
+};
+
+Character.prototype.drawWalk = function () {
+  this.spriteWidth = 80;
+  this.spriteColumns = 1;
+  this.spriteFrameWidth = this.spriteWidth / this.spriteColumns;
+  this.spriteFrameHeight = this.spriteHeight / this.spriteRows;
+  this.frameCount = 1;
+  this.characterImage.src = 'assets/walk.png';
+};
+
+Character.prototype.drawEating = function () {
+  this.spriteWidth = 1056;
+  this.spriteColumns = 11;
+  this.spriteFrameWidth = this.spriteWidth / this.spriteColumns;
+  this.spriteFrameHeight = this.spriteHeight / this.spriteRows;
+  this.frameCount = 11;
+  this.characterImage.src = 'assets/eating.png';
+};
+
+// Añadimos la gravedad a la posición del personaje
+Character.prototype.newPos = function () {
+  this.gravitySpeed += this.gravity;
+  this.y += this.speedY + this.gravitySpeed;
+};
+
+// Ponemos límites de suelo y techo y añadimos el rebote (que sólo debería existir cuando muera)
+Character.prototype.limits = function (height) {
+  var floor = height - this.spriteFrameHeight;
+  var roof = height - height;
+  
+  if (this.y > floor) {
+    this.y = floor;
+    this.gravitySpeed = -(this.gravitySpeed * this.bounce);
+  }
+  if (this.y < roof) {
+    this.y = roof;
+  }
+};
+
+// Definimos colisiones entre los componentes
+Character.prototype.crashWith = function (otherComponent) {
+  var myLeft = this.x + 25;
+  var myRight = this.x + this.spriteFrameWidth - 25;
+  var myTop = this.y + 25;
+  var myBottom = this.y + this.spriteFrameHeight - 25;
+
+  var otherLeft = otherComponent.x;
+  var otherRight = otherComponent.x + (otherComponent.spriteFrameWidth);
+  var otherTop = otherComponent.y;
+  var otherBottom = otherComponent.y + (otherComponent.spriteFrameHeight);
+
+  var crash = true;
+
+  if ( myBottom < otherTop || myTop > otherBottom || myRight < otherLeft || myLeft > otherRight ) {
+    crash = false;
+  }
+  return crash;
+};
+
+Character.prototype.eatingBroccolis = function (broccoli) {
+  var myLeft = this.x;
+  var myRight = this.x + this.spriteFrameWidth - 25;
+  var myTop = this.y + 10;
+  var myBottom = this.y + this.spriteFrameHeight/3;
+
+  var broccoliLeft = broccoli.x;
+  var broccoliRight = broccoli.x + (broccoli.spriteFrameWidth);
+  var broccoliTop = broccoli.y;
+  var broccoliBottom = broccoli.y + (broccoli.spriteFrameHeight);
+
+  var eating = true;
+
+  if ( myBottom < broccoliTop || myTop > broccoliBottom || myRight < broccoliLeft || myLeft > broccoliRight ) {
+    eating = false;
+  }
+  return eating;
+};
+
+
+function Chickens(x, y, ctx, src) {
+  this.x = x;
+  this.y = y;
+  this.ctx = ctx;
+
+  this.spriteWidth = 542;
+  this.spriteHeight = 30;
+  this.spriteRows = 1;
+  this.spriteColumns = 20;
+  this.spriteWalk = 1;
+  this.spriteFrameWidth = this.spriteWidth / this.spriteColumns;
+  this.spriteFrameHeight = this.spriteHeight / this.spriteRows;
+  this.currentFrame = 0;
+  this.srcX = 0;
+  this.srcY = 0;
+  this.frameCount = 20;
+  this.walk = true;
+  this.chickenImage = new Image();
+  this.chickenImage.src = src;
+}
+
+Chickens.prototype.drawChicken = function () {
+  this.ctx.drawImage(this.chickenImage, this.srcX, this.srcY, this.spriteFrameWidth, this.spriteFrameHeight, this.x, this.y, this.spriteFrameWidth, this.spriteFrameHeight);
+};
+
+// Chickens.prototype.updateFrame = function () {
+//   this.currentFrame = ++this.currentFrame % this.frameCount;
+//   this.srcX = this.currentFrame * this.spriteFrameWidth;
+//   this.frameInterval = setInterval(function () {
+//     this.updateFrame();
+//   }.bind(this), 50);
+// };
+
+
+var canvasWrap = document.createElement('div');
+var overlay = document.createElement('div');
+var canvas = document.createElement('canvas');
+canvas.width = 1000;
+canvas.height = 500;
+var ctx = canvas.getContext('2d');
+$('#canvas-wrap').prepend(canvas);
+var floorLimit = 25;
+var pressBarToStart = false;
+
+var startGame = function () {
+  var game = new Game(
+    new Backgrounds(canvas.height, ctx),
+    new Character(200, canvas.height - 85, ctx),
+    ctx,
+    canvas.width,
+    canvas.height
+  );
+  game.flyControls();
+  game.backgrounds.drawSky();
+  game.backgrounds.drawClouds();
+  game.backgrounds.drawMountains();
+  game.backgrounds.drawFloor();
+  game.dragon.drawCharacter();
+  game._shadow();
+  game.music('assets/start-end-music.mp3');
+  game.play();
+};
+
+// Constructor del juego
+function Game (floor, dragon, ctx, width, height) {
+  this.width = width;
+  this.height = height;
+  this.broccolisEaten = 0;
+  this.backgrounds = floor;
+  this.dragon = dragon;
+  this.floorLimit = 25;
+  this.context = ctx;
+  this.frameNo = 0;
+  this.speed = 2;
+  this.speedSteak = 7;
+  this.acceleration = 0.002;
+  this.gameInterval = undefined;
+  this.broccoliScore = new Broccoli(60, 35, this.context);
+
+  // Arrays de elementos en el canvas
+  this.traps = [];
+  this.chickens = [];
+  this.broccolis = [];
+  this.steaks = [];
+
+  // Para la generación de broccolis y trampas
+  this.maxPosition = 0;
+  this.minPosition = this.height - 200;
+  this.positionRandom = 0;
+  this.positionBroccoliIncrement = 0;
+  this.positionChicken = this.height - 50;
+}
+// Asignamos la tecla 'espacio' para cambiar la gravedad y volar!!
+Game.prototype.flyControls = function () {
+  document.onkeydown = function (e) {
+    switch (e.keyCode) {
+      case 32:
+        if (pressBarToStart == false) {
+          pressBarToStart = true;
+          this.start();
+        }
+        else if (this.dragon.y > 0) {
+          this.dragon.gravity = -0.6;
+        }
+        else {
+          this.dragon.gravity = 0.6;
+          this.dragon.y = 0;
+        }
+        break;
+      case 90:
+        if (pressBarToStart == false) {
+          this.updateGameArea();
+          this.play();
+          pressBarToStart = true;
+        } else {
+          this._pauseGame();
+          pressBarToStart = false; 
+        }
+    }
+  }.bind(this);
+
+  document.onkeyup = function (e) {
+    switch (e.keyCode) {
+      case 32:
+        this.dragon.gravity = 0.6;
+        break;
+    }
+  }.bind(this);
+};
+
+Game.prototype.dragonAnimation = function () {
+  if (this.dragon.y < 400) {
+    this.dragon.fly = true;
+    this.dragon.walk = false;
+    this.dragon.eating = false;
+  } 
+  else if (this.dragon.y > 300) {
+    this.dragon.fly = false;
+    this.dragon.walk = true;
+    this.dragon.eating = false;
+  }  
+};
+// Método para los sets iniciales del juego  
+Game.prototype.start = function () {
+  this._startScreen();
+  this.updateGameArea();
+  this.dragon.updateFrame();
+  this.stopMusic();
+  this._selectMusic();
+  this.play();  
+};
+// Método para parar el juego
+Game.prototype._stop = function () {
+  this.stopMusic();
+  this.music('assets/start-end-music.mp3');
+  this.play();
+  window.cancelAnimationFrame(this.gameInterval);
+  this._stopScreen();
+};
+Game.prototype._pauseGame = function () {
+  window.cancelAnimationFrame(this.gameInterval);
+};
+// Método para mostrar activar y desactivar la pantalla de inicio.
+Game.prototype._startScreen = function () {
+  $('#start-screen').toggleClass('show-hide');
+};
+Game.prototype._stopScreen = function () {
+  $('#stop-screen').toggleClass('show-hide');
+  $('#distance').text(this.distance);
+  $('#broccolis').text(this.broccolisEaten);
+};
+// Método para ir vaciando el canvas  
+Game.prototype._clear = function () {
+  this.context.clearRect(0, 0, this.width, this.height);
+};
+// Método para generar un elemento según los frames(n) indicados
+Game.prototype._frameInterval = function (n) {
+  if ( (this.frameNo / n) % 1 == 0) { 
+    return true; 
+  }
+  return false;
+};
+//--------------------------------------------------------------------------------------------------------------
+// Linea horizontal de brócolis
+Game.prototype._broccolisHorizontalLine = function (quantity) {
+  positionRandom = Math.floor(Math.random() * (this.maxPosition - this.minPosition + 1) + this.minPosition);
+  for (var i = 0; i < quantity; i++) {
+    this.broccolis.push(
+      new Broccoli(this.width + i * 25, positionRandom, this.context)
+    );
+  }
+};
+
+Game.prototype._broccolisThreeLine = function (quantity) {
+  /* jshint shadow:true */
+  positionRandom = Math.floor(Math.random() * (this.maxPosition - this.minPosition + 1) + this.minPosition);
+  for (var i = 0; i < (quantity / 3) + 2; i++) {
+    this.broccolis.push(
+      new Broccoli((this.width + i * 25) - 25, positionRandom, this.context)
+    );
+  }
+  for (var i = 0; i < quantity / 3; i++) {
+    this.broccolis.push(
+      new Broccoli(this.width + i * 25, positionRandom + 25, this.context)
+    );
+  }
+  for (var i = 0; i < quantity / 3; i++) {
+    this.broccolis.push(
+      new Broccoli(this.width + i * 25, positionRandom - 25, this.context)
+    );
+  }
+};
+// Linea vertical de brócolis
+Game.prototype._broccolisVerticalLine = function (quantity) {
+  for (var i = 0; i < quantity; i++) {
+    this.broccolis.push(
+      new Broccoli(this.width, this.minPosition + i * -25, this.context)
+    );
+  }
+};
+// Diagonal de brócolis hacia abajo
+Game.prototype._broccolisDiagonalDown = function (quantity) {
+  for (var i = 0; i < quantity; i++) {
+    this.broccolis.push(
+      new Broccoli(this.width + i * 25, this.maxPosition + i * 25, this.context)
+    );
+  }
+};
+// Diagonal de brócolis hacia arriba
+Game.prototype._broccolisDiagonalUp = function (quantity) {
+  for (var i = 0; i < quantity; i++) {
+    this.broccolis.push(
+      new Broccoli(this.width + i * 25, this.minPosition - i * 25, this.context)
+    );
+  }
+};
+// Generador de trampas verticales
+Game.prototype._trapHorizontal = function (quantity) {
+  for (var i = 0; i < quantity; i++) {
+    positionRandom = Math.floor(Math.random() * (this.maxPosition - this.minPosition + 1) + this.minPosition);
+    this.traps.push(
+      new Traps(this.width, positionRandom, this.context, 200, 30, 'assets/bacon-200x30.png')
+    );
+  }
+};
+// Trampa vertical
+Game.prototype._trapVertical = function (quantity) {
+  for (var i = 0; i < quantity; i++) {
+    positionRandom = Math.floor(Math.random() * (this.maxPosition - this.minPosition + 1) + this.minPosition);
+    this.traps.push(
+      new Traps(this.width, positionRandom, this.context, 30, 200, 'assets/bacon-30x200.png')
+    );
+  }
+};
+
+// Filete empanado
+Game.prototype._steak = function (quantity) {
+  for (var i = 0; i < quantity; i++) {
+    positionRandom = Math.floor(Math.random() * (this.maxPosition - this.minPosition + 1) + this.minPosition);
+    this.steaks.push(
+      new Steaks(this.width, positionRandom, this.context)
+    );
+  }
+};
+// Generador de pollos
+Game.prototype._chickensRandom = function (quantity) {
+  for (var i = 0; i < quantity; i++) {
+    positionRandom = Math.floor(Math.random() * (100 - 25 + 1) + 25);
+    this.chickens.push(
+      new Chickens(this.width + i * positionRandom, this.height - 55, this.context, 'assets/chickenBig.png')
+    );
+  }
+};
+
+//----------------------------------------------------------------------------------------------------------------------
+
+// Método para generar las trampas, los pollos y los brócolis
+Game.prototype._sceneCreator = function () {
+  
+  if (this._frameInterval(166) && this.frameNo < 500) { // Scene 01 -> 10"
+    if (this.randomNumber == 0) {
+      this._broccolisThreeLine(27);
+      this._chickensRandom(3);
+    } else {
+      this._broccolisHorizontalLine(12);
+      this._chickensRandom(3);
+    }
+
+  } else if (this._frameInterval(125) && this.frameNo > 500 && this.frameNo <= 1000) {   // Scene 02 -> 10"
+    if (this.randomNumber == 0) {
+      this._trapVertical(1);
+      this._chickensRandom(3);
+    } else {
+      this._trapHorizontal(1);
+      this._chickensRandom(3);
+    }  
+
+  } else if (this._frameInterval(166) && this.frameNo > 1000 && this.frameNo <= 1500) { // Scene 03 -> 10"
+    if (this.randomNumber == 0) {
+      this._broccolisHorizontalLine(10);
+      this._broccolisHorizontalLine(10);  
+    } else {
+      this._broccolisThreeLine(27);
+      this._broccolisThreeLine(15);
+    }
+  } else if (this._frameInterval(250) && this.frameNo > 1000 && this.frameNo <= 1500) { // Scene 03.2 -> 10"
+    this._steak(2);
+
+  } else if (this._frameInterval(125) && this.frameNo > 1500 && this.frameNo <= 2000) { // Scene 04 -> 10"
+    this._trapHorizontal(1);
+    this._chickensRandom(4);
+  } else if (this._frameInterval(233) && this.frameNo > 1500 && this.frameNo <= 2000) { // Scene 04.2 -> 10"
+    this._trapVertical(1);
+    this._chickensRandom(4);  
+
+  } else if (this._frameInterval(250) && this.frameNo > 2000 && this.frameNo <= 2500) { // Scene 05 -> 10"
+    if (this.randomNumber == 0) {
+      this._broccolisDiagonalDown(12); 
+      this._steak(3);
+    } else {
+      this._steak(3);
+      this._broccolisDiagonalUp(12);  
+    }
+  } else if (this._frameInterval(275) && this.frameNo > 2000 && this.frameNo <= 2500) { // Scene 05 -> 10"
+    if (this.randomNumber == 0) {
+      this._steak(2);
+      this._trapVertical(1);
+    } else {
+      this._steak(4);
+      this._trapHorizontal(1);
+    }
+
+  } else if (this._frameInterval(250) && this.frameNo > 2500 && this.frameNo <= 3000) { // Scene 06 -> 10"
+    if (this.randomNumber == 0) {
+      this._broccolisThreeLine(27);
+      this._chickensRandom(3);
+    } else {
+      this._broccolisHorizontalLine(12);
+      this._chickensRandom(3);
+    }
+  } else if (this._frameInterval(250) && this.frameNo > 3000 && this.frameNo <= 3500) { // Scene 07 -> 10"
+    if (this.randomNumber == 0) {
+      this._broccolisDiagonalDown(12);
+      this._steak(3);
+    } else {
+      this._broccolisDiagonalUp(12);
+      this._steak(3);
+    }
+  
+  } else if (this._frameInterval(50) && this.frameNo > 3500) { // Final Scene
+      this._steak(3);
+      this._chickensRandom(2);
+      this._broccolisHorizontalLine(12);
+      this._trapHorizontal(1);
+  }
+  
+};
+// Método para mover las trampas por el canvas  
+Game.prototype._sceneMovement = function () {
+  /* jshint shadow:true */
+  for (var i = 0, n = this.traps.length; i < n; i += 1) {
+    this.traps[i].x -= this.speed;
+    this.traps[i].updateFrame();
+    this.traps[i].drawTrap();
+  }
+  for (var i = 0, n = this.steaks.length; i < n; i += 1) {
+    this.steaks[i].x -= this.speedSteak;
+    this.steaks[i].updateFrame();
+    this.steaks[i].drawSteak();
+  }
+  for (var i = 0, n = this.chickens.length; i < n; i += 1) {
+    this.chickens[i].x -= this.speed;
+    this.chickens[i].drawChicken();
+  }
+  for (var i = 0, n = this.broccolis.length; i < n; i += 1) {
+    this.broccolis[i].x -= this.speed;
+    this.broccolis[i].drawTrap();
+  }
+  for (var i = 0, n = this.broccoliScore.length; i < n; i += 1) {
+    this.broccoliScore[i].updateFrame();
+    this.broccoliScore[i].drawTrap();
+  }
+  
+  this.broccoliScore.drawTrap();
+  this._emptyBroccolis();
+  this._emptyTraps();
+  this._emptySteaks();
+  
+  this.backgrounds.floorX -= this.speed;
+  this.backgrounds.mountainsX -= 1;
+  this.backgrounds.cloudsX -= 0.5;
+};
+
+// Método para las colisiones entre el dragón y los demás elementos.
+Game.prototype._proveCrash = function () {
+  for (i = 0; i < this.traps.length; i += 1) {
+    if (this.dragon.crashWith(this.traps[i])) {
+      this._stop();
+      this.stopMusic();
+    }
+  }
+  for (i = 0; i < this.steaks.length; i += 1) {
+    if (this.dragon.crashWith(this.steaks[i])) {
+      this._stop();
+      this.stopMusic();
+    }
+  }
+  for (i = 0; i < this.chickens.length; i += 1){
+    if (this.dragon.crashWith(this.chickens[i])) {
+      this._stop();
+      this.stopMusic();
+    }
+  }
+  this.broccolis.forEach(function (broccoli, index) {
+    if (this.dragon.eatingBroccolis(broccoli)) {
+      this.broccolis.splice(index, 1);
+      this.broccolisEaten += 1;
+      this.music('assets/broccoli.mp3');
+      this.play();
+    }
+  }.bind(this));
+};
+
+Game.prototype._emptyBroccolis = function () {
+  this.broccolis.forEach(function (item, index, array) {
+    if (item.x < -250) {
+      array.splice(item, 1);
+    }
+  });
+};
+
+Game.prototype._emptyTraps = function () {
+  this.traps.forEach(function (item, index, array) {
+    if (item.x < -200) {
+      array.splice(item, 1);
+    }
+  });
+};
+
+Game.prototype._emptySteaks = function () {
+  this.steaks.forEach(function (item, index, array) {
+    if (item.x < -100) {
+      array.splice(item, 1);
+    }
+  });
+};
+
+// ScoreBoard ___________________________________________________
+Game.prototype.scoreBroccoli = function () {
+  ctx.font = '22px Bungee';
+  ctx.fillStyle = '#006931';
+  if (this.broccolisEaten < 10) {
+    ctx.fillText('00' + this.broccolisEaten, 6, 52);
+  } else if (this.broccolisEaten >= 10) {
+    ctx.fillText('0' + this.broccolisEaten, 6, 52);
+  } else if (this.broccolisEaten >= 100) {
+    ctx.fillText(this.broccolisEaten, 6, 52);
+  }
+};
+
+Game.prototype.scoreDistance = function () {
+  this.distance = Math.trunc(this.speed * this.frameNo / 60);
+  ctx.font = '30px Bungee';
+  ctx.fillStyle = '#411e0a';
+  if (this.distance < 10) {
+    ctx.fillText('000' + this.distance, 5, 30);
+  } else if (this.distance >= 10 && this.distance < 100) {
+    ctx.fillText('00' + this.distance, 5, 30);
+  } else if (this.distance >= 100 && this.distance < 1000) {
+    ctx.fillText('0' + this.distance, 5, 30);
+  } else if (this.distance >= 1000) {
+    ctx.fillText(this.distance, 5, 30);
+  }
+  ctx.font = '24px Bungee';
+  ctx.fillStyle = '#985c35';
+  ctx.fillText('M', 91, 30);
+};
+
+Game.prototype._shadow = function () {
+  ctx.beginPath();
+  ctx.moveTo(20,20);
+  ctx.ellipse(240, 475, 2, 25 * this.dragon.y * 0.004, 90 * Math.PI / 180, 0, 2 * Math.PI);
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+  ctx.fill();
+};
+
+Game.prototype.music = function(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  // this.sound.setAttribute('loop', '');
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.stop = function () {
+    this.sound.pause();
+  };
+};
+
+Game.prototype._selectMusic = function () {
+  if (this.randomMusic == 0) {
+    this.music('assets/54-56.mp3');
+  } else if (this.randomMusic == 1) {
+    this.music('assets/flymetothemoon.mp3');
+  } else if (this.randomMusic == 2) {
+    this.music('assets/icanfly.mp3');
+  } else if (this.randomMusic == 3) {
+    this.music('assets/volar.mp3');
+  }
+};
+
+Game.prototype.play = function () {
+  this.sound.play();
+};
+
+Game.prototype.stopMusic = function () {
+  this.sound.pause();
+};
+
+//__________________________________________________________________________________________________________________________
+// Actualiza el área de juego (canvas) cada 20ms, indicado en el setInterval del método start del constructor.
+Game.prototype.updateGameArea = function () {
+  this.gameInterval = window.requestAnimationFrame(this.updateGameArea.bind(this));
+  this._proveCrash();
+  
+  this._clear();
+
+  this.frameNo += 1;
+  this.randomNumber = Math.floor(Math.random() * 2);
+  this.randomMusic = Math.floor(Math.random() * 4);
+  this.speed += this.acceleration;
+  this.speedSteak += this.acceleration;
+  
+  this.backgrounds.drawSky();
+  this.backgrounds.drawClouds();
+  this.backgrounds.drawMountains();
+  this.backgrounds.drawFloor();
+
+  this._sceneCreator();
+  this._sceneMovement();
+  
+  this.dragonAnimation();
+  this.dragon.drawCharacter();
+  this._shadow();
+  this.dragon.newPos();
+  this.dragon.limits(canvas.height - floorLimit);
+  
+  this.scoreBroccoli();
+  this.scoreDistance();
+}; 
+
+
+
+$(document).ready(function () {
+  
+  startGame();
+
+  $('#start-screen').click(function () {
+    $('#text-info').toggleClass('show-hide');
+  });
+
+  $('.fa-times-circle').click(function () {
+    $('#text-info').toggleClass('show-hide');
+  });
+
+  $('#fly-again').click(function () {
+    location.reload();
+  });
+
+});
+
+
+function Steaks(x, y, ctx) {
+  this.x = x;
+  this.y = y;
+  this.ctx = ctx;
+
+  this.spriteWidth = 694;
+  this.spriteHeight = 60;
+  this.spriteRows = 1;
+  this.spriteColums = 4;
+  this.spriteWalk = 1;
+  this.spriteFrameWidth = this.spriteWidth / this.spriteColums;
+  this.spriteFrameHeight = this.spriteHeight / this.spriteRows;
+  this.currentFrame = 0;
+  this.srcX = 0;
+  this.srcY = 0;
+  this.frameCount = 4;
+  this.walk = true;
+  this.characterImage = new Image();
+  this.characterImage.src = 'assets/chicken-rocket-694x60.png';
+}
+
+Steaks.prototype.updateFrame = function () {
+  this.frameInterval = setInterval(function () {
+    this.currentFrame = ++this.currentFrame % this.frameCount;
+    this.srcX = this.currentFrame * this.spriteFrameWidth;
+  }.bind(this), 30);
+};
+
+Steaks.prototype.drawSteak = function () {
+  this.ctx.drawImage(this.characterImage, this.srcX, this.srcY, this.spriteFrameWidth, this.spriteFrameHeight, this.x, this.y, this.spriteFrameWidth, this.spriteFrameHeight);
+};
+
+
+function Shadow (ctx) {
+
+this.ctx = ctx;
+}
+
+Shadow.prototype.drawShadow = function () {
+this.ctx.fillStyle = '#000000';
+this.ctx.fillRect(200, 100, 100, 10);
+this.frameInterval = window.requestAnimationFrame(this.shadow.bind(this));
+};
+
+
+// Defino las propiedades básicas de las trampas.
+function Traps(x, y, ctx, width, height, imagesrc) {
+  this.x = x;
+  this.y = y;
+  this.ctx = ctx;
+
+  this.spriteWidth = width;
+  this.spriteHeight = height;
+  this.spriteRows = 1;
+  this.spriteColumns = 1;
+  this.spriteRotate = 1;
+  this.spriteFrameWidth = this.spriteWidth / this.spriteColumns;
+  this.spriteFrameHeight = this.spriteHeight / this.spriteRows;
+  this.currentFrame = 0;
+  this.srcX = 0;
+  this.srcY = 0;
+  this.frameCount = 1;
+  this.rotate = true;
+  this.trapImage = new Image();
+  this.trapImage.src = imagesrc;
+}  
+
+// Dibujo la trampa -> updateGameArea
+Traps.prototype.updateFrame = function () {
+  this.frameInterval = setInterval(function () {
+    this.currentFrame = ++this.currentFrame % this.frameCount;
+    this.srcX = this.currentFrame * this.spriteFrameWidth;  
+  }.bind(this), 30);
+};
+
+Traps.prototype.drawTrap = function () {
+  this.ctx.drawImage(this.trapImage, this.srcX, this.srcY, this.spriteFrameWidth, this.spriteFrameHeight, this.x, this.y, this.spriteWidth, this.spriteHeight);
+};
+
+
+
+
+
+
+
+  </script>
+  
+  
+
+
+</body>
+
+</html>
